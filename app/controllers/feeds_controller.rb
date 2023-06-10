@@ -1,6 +1,6 @@
 class FeedsController < ApplicationController
   skip_before_action :login_required, only: [:index, :show]
-  #before_action :set_feed, only: %i[ show edit update destroy ]
+  before_action :set_feed, only: %i[ show edit update destroy ]
 
   # GET /feeds or /feeds.json
   def index
@@ -66,6 +66,6 @@ class FeedsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def feed_params
-      params.require(:feed).permit(:image, :image_cache)
+      params.fetch(:feed, {}).permit(:image, :image_cache)
     end
 end

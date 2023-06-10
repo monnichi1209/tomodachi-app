@@ -1,3 +1,5 @@
 class Feed < ApplicationRecord
-  mount_uploader :image,ImageUploder
+  mount_uploader :image,ImageUploader
+
+  validates :image, presence: true
 end
