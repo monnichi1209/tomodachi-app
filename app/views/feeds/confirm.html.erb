@@ -1,0 +1,12 @@
+<h1>Confirm your post</h1>
+
+<%= image_tag @feed.image.url if @feed.image.present? %>
+<p><%= @feed.content %></p>
+
+<%= form_with(model: @feed, url: feeds_path, method: :post, local: true) do |form| %>
+  <%= form.hidden_field :content, value: @feed.content %>
+  <%= form.hidden_field :image_cache, value: @feed.image_cache %>
+  <%= form.submit "Post" %>
+<% end %>
+
+<%= link_to 'Back', feeds_path %>

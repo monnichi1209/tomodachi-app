@@ -1,5 +1,12 @@
 <h1>New Feed</h1>
 
-<%= render 'form', feed: @feed %>
+<%= form_with(model: @feed, url: confirm_feeds_path, method: :post, local: true) do |form| %>
+  <%= form.label :content %>
+  <%= form.text_area :content, id: :feed_content %>
+  <%= form.label :image %>
+  <%= form.file_field :image, id: :feed_image %>
+  <br>
+  <%= form.submit "Create Feed" %>
+<% end %>
 
 <%= link_to 'Back', feeds_path %>

@@ -2,28 +2,49 @@ class FeedsController < ApplicationController
   skip_before_action :login_required, only: [:index, :show]
   before_action :set_feed, only: %i[ show edit update destroy ]
 
-  # GET /feeds or /feeds.json
   def index
     @feeds = Feed.all
   end
 
-  # GET /feeds/1 or /feeds/1.json
   def show
   end
 
-  # GET /feeds/new
   def new
-    @feed = Feed.new
+    if session[:feed]
+      @feed = Feed.new(session[:feed])
+      session.delete(:feed)
+    else
+      @feed = Feed.new
+    end
   end
 
-  # GET /feeds/1/edit
+  def confirm
+    session[:feed] = nil
+    @feed = session[:feed] ? Feed.new(session[:feed]) : Feed.new(feed_params)
+    session[:feed] = @feed.attributes
+    render :new if @feed.invalid?
+  end
+
   def edit
   end
 
-  # POST /feeds or /feeds.json
   def create
     @feed = Feed.new(feed_params)
+    if params[:back]
+      @feed.attributes = session[:feed] 
+      render :new
+    else
+      if @feed.save
+        session.delete(:feed)
+        redirect_to feeds_path, notice: "Feed was successfully created."
+      else
+        render :new
+      end
+    end
+  end
+  
 
+  def update
     respond_to do |format|
       if @feed.save
         format.html { redirect_to feed_url(@feed), notice: "Feed was successfully created." }
@@ -35,7 +56,6 @@ class FeedsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /feeds/1 or /feeds/1.json
   def update
     respond_to do |format|
       if @feed.update(feed_params)
@@ -48,7 +68,6 @@ class FeedsController < ApplicationController
     end
   end
 
-  # DELETE /feeds/1 or /feeds/1.json
   def destroy
     @feed.destroy
 
@@ -59,13 +78,11 @@ class FeedsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_feed
       @feed = Feed.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
     def feed_params
       params.fetch(:feed, {}).permit(:image, :image_cache, :content)
     end
-end
+  end
