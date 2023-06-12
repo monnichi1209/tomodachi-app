@@ -1,0 +1,13 @@
+<header>
+  <nav>
+    <% if logged_in? %>
+      <%= link_to "プロフィール", user_path(current_user.id) %>
+      <%= link_to "ログアウト", session_path(current_user.id), method: :delete %>
+    <% else %>
+      <%= link_to "サインアップ", new_user_path %>
+      <%= link_to "ログイン", new_session_path %>
+    <% end %>
+  </nav>
+</header>
+
+

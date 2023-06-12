@@ -29,8 +29,6 @@ class FeedsController < ApplicationController
     end
   end
   
-  
-
   def edit
   end
 
@@ -49,24 +47,11 @@ class FeedsController < ApplicationController
       end
     end
   end
-  
-
-  def update
-    respond_to do |format|
-      if @feed.save
-        format.html { redirect_to feed_url(@feed), notice: "Feed was successfully created." }
-        format.json { render :show, status: :created, location: @feed }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @feed.errors, status: :unprocessable_entity }
-      end
-    end
-  end
 
   def update
     respond_to do |format|
       if @feed.update(feed_params)
-        format.html { redirect_to feed_url(@feed), notice: "Feed was successfully updated." }
+        format.html { redirect_to feed_url(@feed), notice: "編集されて更新されました." }
         format.json { render :show, status: :ok, location: @feed }
       else
         format.html { render :edit, status: :unprocessable_entity }
@@ -85,11 +70,13 @@ class FeedsController < ApplicationController
   end
 
   private
-    def set_feed
-      @feed = Feed.find(params[:id])
-    end
+  def set_feed
+    @feed = Feed.find_by(id: params[:id])
+    redirect_to feeds_path, notice: "Feed does not exist." unless @feed
+  end
+  
 
-    def feed_params
-      params.fetch(:feed, {}).permit(:image, :image_cache, :content)
-    end
+  def feed_params
+  params.fetch(:feed, {}).permit(:image, :image_cache, :content)
+  end
   end
