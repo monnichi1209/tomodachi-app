@@ -10,6 +10,10 @@
   <%= @feed.content %>
 </p>
 
+<p>
+  <strong>Posted by:</strong>
+  <%= @feed.user&.name || 'Unknown User' %>
+</p>
 
 <%= link_to 'Edit', edit_feed_path(@feed) %> |
 <%= link_to 'Back', feeds_path %>
