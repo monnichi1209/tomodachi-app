@@ -79,7 +79,7 @@ class FeedsController < ApplicationController
     @feed.destroy
 
     respond_to do |format|
-      format.html { redirect_to feeds_url, notice: "Feed was successfully destroyed." }
+      format.html { redirect_to feeds_url, notice: "画像の削除が確認されました." }
       format.json { head :no_content }
     end
   end
