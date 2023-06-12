@@ -1,4 +1,4 @@
-<h1>Confirm your post</h1>
+<h1>本当に投稿しても大丈夫ですか？</h1>
 
 <%= image_tag @feed.image.url if @feed.image.present? %>
 <p><%= @feed.content %></p>
@@ -6,7 +6,7 @@
 <%= form_with(model: @feed, url: feeds_path, method: :post, local: true) do |form| %>
   <%= form.hidden_field :content, value: @feed.content %>
   <%= form.hidden_field :image_cache, value: @feed.image_cache %>
-  <%= form.submit "Post" %>
+  <%= form.submit "OKです" %>
 <% end %>
 
-<%= link_to 'Back', feeds_path %>
+<%= link_to '戻る', feeds_path %>

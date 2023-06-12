@@ -1,12 +1,14 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Feeds</h1>
+<h1>投稿一覧</h1>
+
+<%= link_to '新規投稿', new_feed_path %>
 
 <table>
   <thead>
     <tr>
-      <th>Image</th>
-      <th>User</th>
+      <th>画像</th>
+      <th>ユーザー</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -17,9 +19,9 @@
       <td><%= image_tag feed.image.url if feed.image.present? %></td>
         <td><%= feed.user&.name || 'Unknown User' %></td>
         <td><%= feed.content %></td>
-        <td><%= link_to 'Show', feed %></td>
-        <td><%= link_to 'Edit', edit_feed_path(feed) %></td>
-        <td><%= link_to 'Destroy', feed, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to '詳細', feed %></td>
+        <td><%= link_to '編集', edit_feed_path(feed) %></td>
+        <td><%= link_to '削除', feed, method: :delete, data: { confirm: '本当に消していいの?' } %></td>
       </tr>
     <% end %>
 </tbody>
@@ -27,4 +29,3 @@
 
 <br>
 
-<%= link_to 'New Feed', new_feed_path %>

@@ -19,17 +19,24 @@ class FeedsController < ApplicationController
   end
 
   def confirm
-    session[:feed] = nil
-    @feed = session[:feed] ? Feed.new(session[:feed]) : Feed.new(feed_params)
+    @feed = Feed.new(feed_params)
+    @feed.user_id = current_user.id
     session[:feed] = @feed.attributes
-    render :new if @feed.invalid?
+    if @feed.valid?
+      render :confirm
+    else
+      render :new
+    end
   end
+  
+  
 
   def edit
   end
 
   def create
     @feed = Feed.new(feed_params)
+    @feed.user_id = current_user.id
     if params[:back]
       @feed.attributes = session[:feed] 
       render :new

@@ -1,19 +1,19 @@
 <p id="notice"><%= notice %></p>
 
 <p>
-  <strong>Image:</strong>
+  <strong>投稿した画像:</strong>
   <%= image_tag @feed.image.url %>
 </p>
 
 <p>
-  <strong>Content:</strong>
+  <strong>コメント:</strong>
   <%= @feed.content %>
 </p>
 
 <p>
-  <strong>Posted by:</strong>
+  <strong>ユーザー名:</strong>
   <%= @feed.user&.name || 'Unknown User' %>
 </p>
 
-<%= link_to 'Edit', edit_feed_path(@feed) %> |
-<%= link_to 'Back', feeds_path %>
+<%= link_to '編集', edit_feed_path(@feed) %> |
+<%= link_to '戻る', feeds_path %>
