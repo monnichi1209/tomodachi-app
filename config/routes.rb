@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  root 'controller#action'
   resources :feeds do
     collection do
       post :confirm
